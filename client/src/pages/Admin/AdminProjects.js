@@ -37,7 +37,7 @@ function AdminProjects() {
         message.success(response.data.message);
         setShowAddEditModal(false);
         setSelectedItemForEdit(null);
-        // dispatch(ReloadData(true));
+        dispatch(ReloadData(true));
         dispatch(HideLoading());
       } else {
         message.error(response.data.message);

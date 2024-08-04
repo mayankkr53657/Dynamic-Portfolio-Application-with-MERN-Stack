@@ -10,24 +10,23 @@ function Login() {
     password: "",
   });
   const dispatch = useDispatch();
-
   const login = async () => {
-    try{
-        dispatch(ShowLoading());
-        const response = await axios.post('http://localhost:8000/api/portfolio/admin-login', user);
-        dispatch(HideLoading());
-        if(response.data.success){
-            message.success(response.data.message);
-            localStorage.setItem("token", JSON.stringify(response.data));
-            window.location.href = "/admin";
-        }else{
-            message.error(response.data.message);
-        }
-        }catch(error){
-            message.error(error.message);
-            dispatch(HideLoading());
-        }
-    };
+    try {
+      dispatch(ShowLoading());
+      const response = await axios.post("http://localhost:8000/api/portfolio/admin-login", user);
+      dispatch(HideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        localStorage.setItem("token", JSON.stringify(response.data));
+        window.location.href = "/admin";
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+      dispatch(HideLoading());
+    }
+  };
   return (
     <div className="flex justify-center items-center h-screen bg-primary">
       <div className="w-96 flex gap-5 p-5 shadow border border-gray-500 flex-col bg-white">
