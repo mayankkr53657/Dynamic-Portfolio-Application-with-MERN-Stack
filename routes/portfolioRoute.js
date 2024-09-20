@@ -105,45 +105,24 @@ router.post("/update-experience", async (req, res) => {
 router.post("/delete-experience", async (req, res) => {
   try {
     const experience = await Experience.findOneAndDelete({ _id: req.body._id });
-    if (!experience) {
-      return res.status(404).send({
-        success: false,
-        message: "Experience not found",
-      });
-    }
     res.status(200).send({
       data: experience,
       success: true,
       message: "Experience deleted successfully",
     });
   } catch (error) {
-    console.error("Error deleting experience:", error);
-    res.status(500).send({
-      success: false,
-      message: "Internal server error",
-      error: error.message,
-    });
+    res.status(500).send(error);
   }
 });
-
 // add project
-// router.post("/add-project", async (req, res) => {
-//   try {
-//     const project = await Project.create(req.body);
-//     res.status(200).send({
-//       data: project,
-//       success: true,
-//       message: "Project added sucessfully",
-//     });
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
 router.post("/add-project", async (req, res) => {
   try {
     const project = new Project(req.body);
     await project.save();
-    res.status(201).send({
+
+
+    
+    res.status(200).send({
       data: project,
       success: true,
       message: "Project added successfully",
@@ -153,23 +132,7 @@ router.post("/add-project", async (req, res) => {
   }
 });
 
-//update project
-// router.post("/update-project", async (req, res) => {
-//   try {
-//     const project = await Project.findOneAndUpdate(
-//       { _id: req.body._id },
-//       req.body,
-//       { new: true }
-//     );
-//     res.status(200).send({
-//       data: project,
-//       success: true,
-//       message: "Project updated sucessfully",
-//     });
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
+// update project
 router.post("/update-project", async (req, res) => {
   try {
     const project = await Project.findOneAndUpdate(
@@ -177,12 +140,6 @@ router.post("/update-project", async (req, res) => {
       req.body,
       { new: true }
     );
-    if (!project) {
-      return res.status(404).send({
-        success: false,
-        message: "Project not found",
-      });
-    }
     res.status(200).send({
       data: project,
       success: true,
@@ -194,27 +151,17 @@ router.post("/update-project", async (req, res) => {
 });
 
 // delete project
+
 router.post("/delete-project", async (req, res) => {
   try {
     const project = await Project.findOneAndDelete({ _id: req.body._id });
-    if (!project) {
-      return res.status(404).send({
-        success: false,
-        message: "Project not found",
-      });
-    }
     res.status(200).send({
       data: project,
       success: true,
       message: "Project deleted successfully",
     });
   } catch (error) {
-    console.error("Error deleting project:", error);
-    res.status(500).send({
-      // success: false,
-      // message: "Internal server error",
-      // error: error.message,
-    });
+    res.status(500).send(error);
   }
 });
 
@@ -302,6 +249,31 @@ router.post("/update-contact", async (req, res) => {
 });
 
 // admin login
+// router.post("/admin-login", async (req, res) => {
+//   try {
+//     const user = await User.findOne({
+//       username: req.body.username,
+//       password: req.body.password,
+//     });
+//     user.password = "";
+//     if (user) {
+//       res.status(200).send({
+//         data: user,
+//         success: true,
+//         message: "Login successfully",
+//       });
+//     } else {
+//       res.status(200).send({
+//         data: user,
+//         success: false,
+//         message: "Invalid username or password",
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
+
 router.post("/admin-login", async (req, res) => {
   try {
     const user = await User.findOne({
@@ -326,6 +298,5 @@ router.post("/admin-login", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 
 module.exports = router;
