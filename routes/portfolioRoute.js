@@ -7,9 +7,8 @@ const {
   Experience,
   Course,
 } = require("../models/portfolioModel");
-const User = require("../models/portfolioModel");
-
-//get all portforlio data
+const User = require("../models/userModel");
+// get all portfolio data
 router.get("/get-portfolio-data", async (req, res) => {
   try {
     const intros = await Intro.find();
@@ -20,8 +19,8 @@ router.get("/get-portfolio-data", async (req, res) => {
     const courses = await Course.find();
 
     res.status(200).send({
-      intros: intros[0],
-      abouts: abouts[0],
+      intro: intros[0],
+      about: abouts[0],
       projects: projects,
       contact: contacts[0],
       experiences: experiences,
@@ -32,7 +31,7 @@ router.get("/get-portfolio-data", async (req, res) => {
   }
 });
 
-//update intro
+// update intro
 router.post("/update-intro", async (req, res) => {
   try {
     const intro = await Intro.findOneAndUpdate(
@@ -43,14 +42,14 @@ router.post("/update-intro", async (req, res) => {
     res.status(200).send({
       data: intro,
       success: true,
-      message: "Intro updated sucessfully",
+      message: "Intro updated successfully",
     });
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-//update about
+// update about
 router.post("/update-about", async (req, res) => {
   try {
     const about = await About.findOneAndUpdate(
@@ -61,14 +60,15 @@ router.post("/update-about", async (req, res) => {
     res.status(200).send({
       data: about,
       success: true,
-      message: "About updated sucessfully",
+      message: "Abouts updated successfully",
     });
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-//add experience
+// add experience
+
 router.post("/add-experience", async (req, res) => {
   try {
     const experience = new Experience(req.body);
@@ -83,7 +83,7 @@ router.post("/add-experience", async (req, res) => {
   }
 });
 
-//update experience
+// update experience
 router.post("/update-experience", async (req, res) => {
   try {
     const experience = await Experience.findOneAndUpdate(
@@ -114,14 +114,12 @@ router.post("/delete-experience", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 // add project
 router.post("/add-project", async (req, res) => {
   try {
     const project = new Project(req.body);
     await project.save();
-
-
-    
     res.status(200).send({
       data: project,
       success: true,
@@ -170,7 +168,7 @@ router.post("/add-course", async (req, res) => {
   try {
     const course = new Course(req.body);
     await course.save();
-    res.status(201).send({
+    res.status(200).send({
       data: course,
       success: true,
       message: "Course added successfully",
@@ -180,7 +178,7 @@ router.post("/add-course", async (req, res) => {
   }
 });
 
-//update course
+// update course
 router.post("/update-course", async (req, res) => {
   try {
     const course = await Course.findOneAndUpdate(
@@ -188,12 +186,6 @@ router.post("/update-course", async (req, res) => {
       req.body,
       { new: true }
     );
-    if (!course) {
-      return res.status(404).send({
-        success: false,
-        message: "Course not found",
-      });
-    }
     res.status(200).send({
       data: course,
       success: true,
@@ -204,32 +196,22 @@ router.post("/update-course", async (req, res) => {
   }
 });
 
-//delete course
+// delete course
+
 router.post("/delete-course", async (req, res) => {
   try {
     const course = await Course.findOneAndDelete({ _id: req.body._id });
-    if (!course) {
-      return res.status(404).send({
-        success: false,
-        message: "Project not found",
-      });
-    }
     res.status(200).send({
       data: course,
       success: true,
       message: "Course deleted successfully",
     });
   } catch (error) {
-    console.error("Error deleting course:", error);
-    res.status(500).send({
-      // success: false,
-      // message: "Internal server error",
-      // error: error.message,
-    });
+    res.status(500).send(error);
   }
 });
 
-//update contact
+// update contact
 router.post("/update-contact", async (req, res) => {
   try {
     const contact = await Contact.findOneAndUpdate(
@@ -237,7 +219,6 @@ router.post("/update-contact", async (req, res) => {
       req.body,
       { new: true }
     );
-
     res.status(200).send({
       data: contact,
       success: true,
@@ -249,31 +230,6 @@ router.post("/update-contact", async (req, res) => {
 });
 
 // admin login
-// router.post("/admin-login", async (req, res) => {
-//   try {
-//     const user = await User.findOne({
-//       username: req.body.username,
-//       password: req.body.password,
-//     });
-//     user.password = "";
-//     if (user) {
-//       res.status(200).send({
-//         data: user,
-//         success: true,
-//         message: "Login successfully",
-//       });
-//     } else {
-//       res.status(200).send({
-//         data: user,
-//         success: false,
-//         message: "Invalid username or password",
-//       });
-//     }
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
-
 router.post("/admin-login", async (req, res) => {
   try {
     const user = await User.findOne({
@@ -298,5 +254,4 @@ router.post("/admin-login", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 module.exports = router;
