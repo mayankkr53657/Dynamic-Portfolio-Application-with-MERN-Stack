@@ -20,7 +20,7 @@ function AdminProjects() {
       let response;
       if (selectedItemForEdit) {
         response = await axios.post(
-          "http://localhost:8000/api/portfolio/update-project",
+          "https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/update-project",
           {
             ...values,
             _id: selectedItemForEdit._id, // Use _id instead of id
@@ -28,7 +28,7 @@ function AdminProjects() {
         );
       } else {
         response = await axios.post(
-          "http://localhost:8000/api/portfolio/add-project",
+          "https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/add-project",
           values
         );
       }
@@ -52,7 +52,7 @@ function AdminProjects() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "http://localhost:8000/api/portfolio/delete-project",
+        "https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/delete-project",
         {
           _id: item._id, // Use _id instead of id
         }

@@ -11,7 +11,7 @@ function AdminIntro() {
   const onFinish = async(values) => {
     try{
       dispatch(ShowLoading());
-      const response = await axios.post("http://localhost:8000/api/portfolio/update-intro", {
+      const response = await axios.post("https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/update-intro", {
         ...values,
         _id: portfolioData.intros._id,
       });

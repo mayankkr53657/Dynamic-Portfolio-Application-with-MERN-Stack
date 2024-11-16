@@ -17,12 +17,12 @@ function Experiences() {
       dispatch(ShowLoading());
       let response;
       if (selectedItemForEdit) {
-        response = await axios.post("http://localhost:8000/api/portfolio/update-experience", {
+        response = await axios.post("https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/update-experience", {
           ...values,
           _id: selectedItemForEdit._id,
         });
       } else {
-        response = await axios.post("http://localhost:8000/api/portfolio/add-experience", values);
+        response = await axios.post("https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/add-experience", values);
       }
 
       dispatch(HideLoading());
@@ -45,7 +45,7 @@ function Experiences() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "http://localhost:8000/api/portfolio/delete-experience",
+        "https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/delete-experience",
         {
           _id: item._id, // Use _id instead of id
         }

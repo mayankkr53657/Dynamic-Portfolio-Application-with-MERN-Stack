@@ -21,7 +21,7 @@ function AdminCourses() {
       let response;
       if (selectedItemForEdit) {
         response = await axios.post(
-          "http://localhost:8000/api/portfolio/update-course",
+          "https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/update-course",
           {
             ...values,
             _id: selectedItemForEdit._id, // Use _id instead of id
@@ -29,7 +29,7 @@ function AdminCourses() {
         );
       } else {
         response = await axios.post(
-          "http://localhost:8000/api/portfolio/add-course",
+          "https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/add-course",
           values
         );
       }
@@ -55,7 +55,7 @@ function AdminCourses() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "http://localhost:8000/api/portfolio/delete-course",
+        "https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/delete-course",
         {
           _id: item._id, // Use _id instead of id
         }

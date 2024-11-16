@@ -13,7 +13,7 @@ function AdminAbout() {
       const tempSkills = values.skills.split(",");
       values.skills = tempSkills;
       dispatch(ShowLoading());
-      const response = await axios.post("http://localhost:8000/api/portfolio/update-about", {
+      const response = await axios.post("https://dynamic-portfolio-backend-6o42.onrender.com/api/portfolio/update-about", {
         ...values,
         _id: portfolioData.abouts._id,
       });
